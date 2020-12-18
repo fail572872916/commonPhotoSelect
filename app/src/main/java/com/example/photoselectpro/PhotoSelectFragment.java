@@ -47,7 +47,7 @@ public class PhotoSelectFragment extends Fragment {
     public List<LocalMedia> getSelectList() {
         return selectList;
     }
-
+//
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
