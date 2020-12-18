@@ -9,6 +9,10 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TestActivity extends AppCompatActivity {
 
@@ -18,7 +22,7 @@ public class TestActivity extends AppCompatActivity {
     Button button;
 
     String tag = "-1";
-
+    List<Fragment> tagList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +36,9 @@ public class TestActivity extends AppCompatActivity {
         fragment2.setOnClickListener(() -> tag = fragment2.getTag());
         fragment3.setOnClickListener(() -> tag = fragment3.getTag());
 
+        tagList.add(fragment1);
+        tagList.add(fragment2);
+        tagList.add(fragment3);
         button.setOnClickListener(v -> {
             //拿到要提交的图片
             Log.d("TestActivity", "fragment1.getSelectList():" + fragment1.getSelectList());
@@ -45,22 +52,9 @@ public class TestActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (tag.equals(fragment1.getTag())) {
 
-            Log.d("PhotoSelectFragment", "我是tag" + fragment1.getTag());
-            fragment1.onActivityResult(Integer.parseInt(fragment1.getTag()), resultCode, data);
-            Log.d("TestActivity", "我是1");
-        }
-        if (tag.equals(fragment2.getTag())) {
+        PhotoSelectFragment.forwardData(tag, resultCode, data, tagList);
 
-            Log.d("TestActivity", "我是2");
-            fragment2.onActivityResult(Integer.parseInt(fragment2.getTag()), resultCode, data);
-        }
-        if (tag.equals(fragment3.getTag())) {
-
-            Log.d("TestActivity", "我是2");
-            fragment3.onActivityResult(Integer.parseInt(fragment3.getTag()), resultCode, data);
-        }
 
     }
 }

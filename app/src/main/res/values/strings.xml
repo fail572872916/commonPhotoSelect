@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">PhotoSelectPro</string>
+
+    <string name="request_permission">应用需要以下权限才能继续</string>
+    <string name="allow">允许</string>
+    <string name="request_permission_setting">请在设置中允许以下权限</string>
 </resources>

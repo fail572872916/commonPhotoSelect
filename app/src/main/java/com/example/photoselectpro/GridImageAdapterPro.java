@@ -29,6 +29,9 @@ public class GridImageAdapterPro extends RecyclerView.Adapter<RecyclerView.ViewH
     private List<LocalMedia> mData = new ArrayList<>();
     private int maxSize = -1;
     private OnClickListener onClickListener;
+
+    private boolean isPreview = false;
+
     public void setOnClickListener(OnClickListener onClickListener) {
         this.onClickListener = onClickListener;
 
@@ -39,7 +42,13 @@ public class GridImageAdapterPro extends RecyclerView.Adapter<RecyclerView.ViewH
         this.mLayoutInflater = LayoutInflater.from(context);
     }
 
+    public boolean isPreview() {
+        return isPreview;
+    }
 
+    public void setPreview(boolean preview) {
+        isPreview = preview;
+    }
 
     @Override
     public int getItemViewType(int position) {
@@ -100,29 +109,31 @@ public class GridImageAdapterPro extends RecyclerView.Adapter<RecyclerView.ViewH
         return new ViewHolder(inflate);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
+
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ViewHolder vh = (ViewHolder) holder;
+
+
         if (position < mData.size()) {
             vh.cvDel.setVisibility(View.VISIBLE);
             LocalMedia fileBean = mData.get(position);
             String path = fileBean.getPath();
-            int placeholder = R.drawable.ic_camera;
+            int placeholder = R.drawable.ic_photo_black;
+            int chooseModel = fileBean.getChooseModel();
 
-
-            if (fileBean.getMimeType() == PictureConfig.TYPE_IMAGE) {
+            if (chooseModel == PictureConfig.TYPE_IMAGE) {
                 vh.tvTime.setVisibility(View.GONE);
 
-            } else if (fileBean.getMimeType() == PictureConfig.TYPE_VIDEO) {
+            } else if (chooseModel == PictureConfig.TYPE_VIDEO) {
                 vh.tvTime.setText(String.valueOf(fileBean.getDuration()));
                 vh.tvTime.setVisibility(View.VISIBLE);
-            } else if (fileBean.getMimeType() == PictureMimeType.ofAudio()) {
+            } else if (chooseModel == PictureMimeType.ofAudio()) {
                 vh.tvTime.setVisibility(View.VISIBLE);
                 vh.tvTime.setText(String.valueOf(fileBean.getDuration()));
                 vh.tvTime.setTextColor(mContext.getColor(R.color.black));
                 path = "";
-                placeholder = R.drawable.audio_placeholder;
+                placeholder = R.drawable.ic_audio_theme;
             }
 
             Glide.with(mContext)
@@ -131,22 +142,40 @@ public class GridImageAdapterPro extends RecyclerView.Adapter<RecyclerView.ViewH
                     .into(vh.ibtnPhoto);
             String finalPath = path;
             vh.ibtnPhoto.setOnClickListener(v ->
-                    onClickListener.OnPreviewClick(position, finalPath));
+                    onClickListener.onPreviewClick(position, finalPath));
         } else {
-            vh.cvDel.setVisibility(View.GONE);
-            Glide.with(mContext)
-                    .load(mContext.getDrawable(R.drawable.ic_baseline_add_24))
-                    .thumbnail(0.1f)
-                    .into(vh.ibtnPhoto);
-            vh.ibtnPhoto.setBackgroundResource(R.drawable.bg_storke_round);
-            vh.ibtnPhoto.setOnClickListener(v -> onClickListener.OnAddClick());
+            if (!isPreview) {
+
+
+                Glide.with(mContext)
+                        .load(mContext.getDrawable(R.drawable.ic_baseline_add_24))
+                        .thumbnail(0.1f)
+                        .into(vh.ibtnPhoto);
+                vh.ibtnPhoto.setBackgroundResource(R.drawable.bg_storke_round);
+                vh.ibtnPhoto.setOnClickListener(v -> onClickListener.onAddClick());
+            } else {
+                vh.cvDel.setVisibility(View.GONE);
+            }
+
+
         }
-        vh.cvDel.setOnClickListener(v -> onClickListener.OnDelClick(position));
+        if (isPreview || mData.size() == 0) {
+            vh.cvDel.setVisibility(View.GONE);
+        }
+
+
+        vh.cvDel.setOnClickListener(v -> onClickListener.onDelClick(position));
     }
 
-    //返回的数量
+    /**
+     * @return 返回个数
+     */
     @Override
     public int getItemCount() {
+
+        if (isPreview) {
+            return mData.size();
+        }
         if (maxSize == -1 || isShowAdd(maxSize)) {
             return mData.size() + 1;
         } else {
@@ -179,11 +208,23 @@ public class GridImageAdapterPro extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     public interface OnClickListener {
-        void OnAddClick();
+        /**
+         * 添加事件
+         */
+        void onAddClick();
 
-        void OnDelClick(int position);
+        /**
+         * 删除当前
+         */
+        void onDelClick(int position);
 
-        void OnPreviewClick(int position, String path);
+        /**
+         * 预览
+         *
+         * @param position 当前点击的位置
+         * @parmar path  路径
+         */
+        void onPreviewClick(int position, String path);
     }
 
 
