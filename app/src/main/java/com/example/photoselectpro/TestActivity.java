@@ -21,8 +21,6 @@ public class TestActivity extends AppCompatActivity {
     PhotoSelectFragment fragment3;
     Button button;
 
-    String tag = "-1";
-    List<Fragment> tagList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,13 +30,7 @@ public class TestActivity extends AppCompatActivity {
         fragment2 = (PhotoSelectFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView3);
         fragment3 = (PhotoSelectFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView4);
 
-        fragment1.setOnClickListener(() -> tag = fragment1.getTag());
-        fragment2.setOnClickListener(() -> tag = fragment2.getTag());
-        fragment3.setOnClickListener(() -> tag = fragment3.getTag());
 
-        tagList.add(fragment1);
-        tagList.add(fragment2);
-        tagList.add(fragment3);
         button.setOnClickListener(v -> {
             //拿到要提交的图片
             Log.d("TestActivity", "fragment1.getSelectList():" + fragment1.getSelectList());
@@ -49,12 +41,5 @@ public class TestActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        PhotoSelectFragment.forwardData(tag, resultCode, data, tagList);
-
-
-    }
 }

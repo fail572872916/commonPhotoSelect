@@ -19,6 +19,7 @@ import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
+import com.luck.picture.lib.listener.OnResultCallbackListener;
 import com.permissionx.guolindev.PermissionX;
 
 
@@ -198,7 +199,21 @@ public class PhotoSelectFragment extends Fragment {
                                 .minimumCompressSize(100) // 小于多少kb的图片不压缩
                                 .isCamera(true)// 是否显示拍照按钮
                                 .selectionMode(PictureConfig.MULTIPLE)
-                                .forResult(PictureConfig.CHOOSE_REQUEST);
+                                .forResult(new OnResultCallbackListener() {
+                                    @Override
+                                    public void onResult(List result) {
+                                        List<LocalMedia> images = result;
+                                        selectList.clear();
+                                        selectList.addAll(images);
+                                        gridImageAdapterPro.setData(selectList);
+                                        gridImageAdapterPro.notifyDataSetChanged();
+                                    }
+
+                                    @Override
+                                    public void onCancel() {
+
+                                    }
+                                });
                         //相册
                     } else {
                     Toast.makeText(getContext(), "拒绝", Toast.LENGTH_SHORT).show();
@@ -209,22 +224,22 @@ public class PhotoSelectFragment extends Fragment {
     }
 
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            //文件选择回调
-            //照片回调
-            if (requestCode == Integer.parseInt(getTag())) {
-                // 图片、视频、音频选择结果回调
-                List<LocalMedia> images = PictureSelector.obtainMultipleResult(data);
-                selectList.clear();
-                selectList.addAll(images);
-                gridImageAdapterPro.setData(selectList);
-                gridImageAdapterPro.notifyDataSetChanged();
-            }
-        }
-    }
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (resultCode == RESULT_OK) {
+//            //文件选择回调
+//            //照片回调
+//            if (requestCode == Integer.parseInt(getTag())) {
+//                // 图片、视频、音频选择结果回调
+//                List<LocalMedia> images = PictureSelector.obtainMultipleResult(data);
+//                selectList.clear();
+//                selectList.addAll(images);
+//                gridImageAdapterPro.setData(selectList);
+//                gridImageAdapterPro.notifyDataSetChanged();
+//            }
+//        }
+//    }
 
     private OnClickListener onClickListener;
 

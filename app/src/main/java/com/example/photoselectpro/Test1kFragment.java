@@ -17,7 +17,7 @@ public class Test1kFragment extends Fragment {
     PhotoSelectFragment fragment1;
     PhotoSelectFragment fragment2;
     PhotoSelectFragment fragment3;
-    String tag="-1";
+
     View view;
     public Test1kFragment() {
     }
@@ -39,34 +39,11 @@ public class Test1kFragment extends Fragment {
         fragment2 = (PhotoSelectFragment) getChildFragmentManager().findFragmentById(R.id.fragmentContainerView3);
         fragment3 = (PhotoSelectFragment) getChildFragmentManager().findFragmentById(R.id.fragmentContainerView4);
 
-        fragment1.setOnClickListener(() ->tag= fragment1.getTag());
-        fragment2.setOnClickListener(() ->tag= fragment2.getTag());
-        fragment3.setOnClickListener(() ->tag= fragment3.getTag());
 
         return view;
 
 
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(tag.equals(fragment1.getTag())) {
 
-            Log.d("PhotoSelectFragment", "我是tag"+fragment1.getTag());
-            fragment1.onActivityResult(Integer.parseInt(fragment1.getTag()), resultCode, data);
-            Log.d("TestActivity", "我是1");
-        }
-        if(tag.equals(fragment2.getTag())) {
-
-            Log.d("TestActivity", "我是2");
-            fragment2.onActivityResult(Integer.parseInt(fragment2.getTag()), resultCode, data);
-        }
-        if(tag.equals(fragment3.getTag())) {
-
-            Log.d("TestActivity", "我是2");
-            fragment3.onActivityResult(Integer.parseInt(fragment3.getTag()), resultCode, data);
-        }
-
-    }
 }
