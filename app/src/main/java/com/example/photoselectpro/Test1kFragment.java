@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import java.io.File;
+import java.io.FileWriter;
+
 
 public class Test1kFragment extends Fragment {
 
@@ -20,6 +23,7 @@ public class Test1kFragment extends Fragment {
 
     View view;
     public Test1kFragment() {
+
     }
 
 
