@@ -27,7 +27,7 @@ public class TestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_test);
         button=findViewById(R.id.button);
         fragment1 = (PhotoSelectFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView2);
-        fragment2 = (PhotoSelectFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView3);
+        fragment2 = (PhotoSelectFragmentRed) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView3);
         fragment3 = (PhotoSelectFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView4);
 
 

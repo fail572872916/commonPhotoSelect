@@ -32,9 +32,21 @@ public class GridImageAdapterPro extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private boolean isPreview = false;
 
+    public  int defaultBackground=R.drawable.bg_storke_round;
+    public  int defaultImg=R.drawable.ic_baseline_add_24;
+
+    public  int loadBackground=defaultBackground;
+    public  int loadImg=defaultImg;
+
     public void setOnClickListener(OnClickListener onClickListener) {
         this.onClickListener = onClickListener;
 
+    }
+
+
+    public void  setTheme(int defaultBackground,int src){
+        this.loadBackground=defaultBackground;
+        this.loadImg=src;
     }
 
     public GridImageAdapterPro(Context context) {
@@ -148,11 +160,12 @@ public class GridImageAdapterPro extends RecyclerView.Adapter<RecyclerView.ViewH
 
 
                 Glide.with(mContext)
-                        .load(mContext.getDrawable(R.drawable.ic_baseline_add_24))
+                        .load(mContext.getDrawable(loadImg))
                         .thumbnail(0.1f)
                         .into(vh.ibtnPhoto);
-                vh.ibtnPhoto.setBackgroundResource(R.drawable.bg_storke_round);
+                vh.ibtnPhoto.setBackgroundResource(loadBackground);
                 vh.ibtnPhoto.setOnClickListener(v -> onClickListener.onAddClick());
+
             } else {
                 vh.cvDel.setVisibility(View.GONE);
             }

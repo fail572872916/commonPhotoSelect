@@ -20,10 +20,11 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView3"
-        android:name="com.example.photoselectpro.PhotoSelectFragment"
+        android:name="com.example.photoselectpro.PhotoSelectFragmentRed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:tag="2"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fragmentContainerView2"

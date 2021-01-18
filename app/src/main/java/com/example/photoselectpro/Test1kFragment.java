@@ -1,5 +1,7 @@
 package com.example.photoselectpro;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,6 +40,7 @@ public class Test1kFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+//        Dialog dialog = AlertDialog()
         view = inflater.inflate(R.layout.fragment_test1k, container, false);
         fragment1 = (PhotoSelectFragment) getChildFragmentManager().findFragmentById(R.id.fragmentContainerView2);
         fragment2 = (PhotoSelectFragment) getChildFragmentManager().findFragmentById(R.id.fragmentContainerView3);

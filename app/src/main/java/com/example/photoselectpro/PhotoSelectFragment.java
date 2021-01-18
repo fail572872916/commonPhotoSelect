@@ -43,9 +43,12 @@ public class PhotoSelectFragment extends Fragment {
 
     public boolean isPreview = false;
 
+
+
     public PhotoSelectFragment() {
         // Required empty public constructor
     }
+
 
 
     @Override
@@ -103,6 +106,7 @@ public class PhotoSelectFragment extends Fragment {
         mPhotoRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         mPhotoRecyclerView.getItemAnimator().setChangeDuration(0);
         gridImageAdapterPro = new GridImageAdapterPro(getActivity());
+
         mPhotoRecyclerView.setAdapter(gridImageAdapterPro);
         //通知外部可以传递值过来了
         if (onShowListener != null) {
